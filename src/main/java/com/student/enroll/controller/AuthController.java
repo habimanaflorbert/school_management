@@ -25,16 +25,20 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
+    
     private final IUserService userService;
     private final JwtService jwtService;
     
     private final AuthenticationManager authenticationManager;
     
-    @GetMapping("/")
-    public String getMethodName() {
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse> userInformation() {
         System.out.println("hehehehe");
-        return "hello";
+        try {
+        return ResponseEntity.ok(new ApiResponse("added sucessful", null));
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+    }
     }
     
     @PostMapping("/register")
