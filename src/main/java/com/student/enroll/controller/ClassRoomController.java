@@ -20,12 +20,13 @@ import com.student.enroll.classRoom.request.AddClassRoomRequest;
 import com.student.enroll.classRoom.service.IClassRoomService;
 import com.student.enroll.exception.ResourceNotFoundException;
 import com.student.enroll.response.ApiResponse;
-
+import javax.validation.Valid;
 
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}/classRoom")
+
 public class ClassRoomController {
     private final IClassRoomService classRoomService;
 
@@ -49,7 +50,7 @@ public class ClassRoomController {
     
        
        @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addClassRoom(@RequestBody AddClassRoomRequest classRoom) {
+    public ResponseEntity<ApiResponse> addClassRoom(@Valid @RequestBody AddClassRoomRequest classRoom) {
         try {
             ClassRoom theClassRoom=classRoomService.addClassRoom(classRoom);
             return ResponseEntity.ok(new ApiResponse("added sucessful", theClassRoom));
