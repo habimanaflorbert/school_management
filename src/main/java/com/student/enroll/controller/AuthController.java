@@ -33,7 +33,6 @@ public class AuthController {
     
     @GetMapping("/me")
     public ResponseEntity<ApiResponse> userInformation() {
-        System.out.println("hehehehe");
         try {
         return ResponseEntity.ok(new ApiResponse("added sucessful", null));
     } catch (Exception e) {
@@ -45,6 +44,12 @@ public class AuthController {
     public ResponseEntity<ApiResponse> createUser(@RequestBody AddUserRequest item) {
 
         try {
+            if (userService.getUserByUsername(item.getUsername()).isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(null,"username is arleady exist"));
+            }
+            if (userService.getUserByEmail(item.getEmail()).isPresent()) {
+                return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(null,"Email is arleady exist"));
+            }
             User userData=userService.createUser(item);
             
             return ResponseEntity.ok(new ApiResponse("added sucessful", userData));

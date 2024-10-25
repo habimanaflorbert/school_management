@@ -2,7 +2,6 @@ package com.student.enroll.user.service;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.student.enroll.email.service.EmailService;
 import com.student.enroll.user.model.User;
@@ -47,14 +46,14 @@ public class UserService implements IUserService{
         }
      
     
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<User> getUserByUsername(String username) {
+        return Optional.ofNullable(userRepository.findByUsername(username));
     }
     
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
+    
     public boolean checkPassword(User user, String rawPassword) {
         return encoder.matches(rawPassword, user.getPassword());
     }  

@@ -8,8 +8,7 @@ import com.student.enroll.classRoom.model.ClassRoom;
 import com.student.enroll.classRoom.repository.ClassRoomRepository;
 import com.student.enroll.classRoom.request.AddClassRoomRequest;
 import com.student.enroll.exception.ResourceNotFoundException;
-import com.student.enroll.student.model.Student;
-import com.student.enroll.student.request.UpdateStudentRequest;
+
 
 import lombok.RequiredArgsConstructor;
 
