@@ -42,38 +42,24 @@ public class StudentClassRoomService implements IStudentClassRoomService {
 
     @Override
     public StudentClassRoom addStudentClassRoom(AddStudentClassRoomRequest request) {
-        Student student=studentRepository.findById(request.getStudent().getId()).orElseThrow(() -> null);
-        ClassRoom classRoom=classRoomRepository.findById(request.getClassRoom().getId()).orElseThrow(() -> null);
-        request.setClassRoom(classRoom);
-        request.setStudent(student);
-      return studentClassRoomRepository.save(creaStudentClassRoom(request));
+       
+        Student student=studentRepository.findById(request.getStudent()).orElseThrow(() -> new ResourceNotFoundException("student not Found!"));
+        ClassRoom classRoom=classRoomRepository.findById(request.getClassRoom()).orElseThrow(() -> new ResourceNotFoundException("Class Room not Found!"));
+      return studentClassRoomRepository.save(new StudentClassRoom(student,classRoom));
     }
-    private StudentClassRoom creaStudentClassRoom(AddStudentClassRoomRequest request){
-        return new StudentClassRoom(
-            request.getStudent(),
-            request.getClassRoom()
-        );
-    }
+ 
     
     
     @Override
     public StudentClassRoom updateStudentClassRoomById(AddStudentClassRoomRequest request, Long id) {
-        Student student=studentRepository.findById(request.getStudent().getId()).orElseThrow(() -> null);
-        ClassRoom classRoom=classRoomRepository.findById(request.getClassRoom().getId()).orElseThrow(() -> null);
-        request.setClassRoom(classRoom);
-        request.setStudent(student);
+        Student student=studentRepository.findById(request.getStudent()).orElseThrow(() ->  new ResourceNotFoundException("student not Found!"));
+        ClassRoom classRoom=classRoomRepository.findById(request.getClassRoom()).orElseThrow(() -> new ResourceNotFoundException("Class Room not Found!"));
         return studentClassRoomRepository.findById(id)
-        .map(existingStudentClassRoom -> updateExistingStudentClass(existingStudentClassRoom, request))
+        .map(existingStudentClassRoom -> new StudentClassRoom(student,classRoom))
         .map(studentClassRoomRepository::save)
         .orElseThrow(()-> new ResourceNotFoundException("class room not found !"));
     }
-    private StudentClassRoom updateExistingStudentClass(StudentClassRoom existingProduct,AddStudentClassRoomRequest request){
-        existingProduct.setStudent(request.getStudent());
-        existingProduct.setClassRoom(request.getClassRoom());
-        return existingProduct;
-        
-    
-    }
+   
 
     @Override
     public void deleteStudentById(Long id) {

@@ -1,24 +1,22 @@
 package com.student.enroll.controller;
 import java.util.List;
 
+import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 
-import com.student.enroll.classRoom.model.ClassRoom;
-import com.student.enroll.classRoom.request.AddClassRoomRequest;
 import com.student.enroll.exception.ResourceNotFoundException;
 import com.student.enroll.response.ApiResponse;
 import com.student.enroll.student.model.StudentClassRoom;
 import com.student.enroll.student.request.AddStudentClassRoomRequest;
-import com.student.enroll.student.service.StudentClassRoomService;
-
-
+import com.student.enroll.student.service.IStudentClassRoomService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("${api.prefix}/student-classroom")
 public class StudentClassRoomController {
 
-    private final StudentClassRoomService studentClassRoomService;
+    private final IStudentClassRoomService studentClassRoomService;
 
 
     @GetMapping("/")
@@ -42,8 +40,9 @@ public class StudentClassRoomController {
 
            
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addClassRoom(@RequestBody AddStudentClassRoomRequest classRoom) {
+    public ResponseEntity<ApiResponse> addStudentClassRoom(@Valid @RequestBody AddStudentClassRoomRequest classRoom) {
         try {
+            System.out.println("classRoom");
             StudentClassRoom theClassRoom=studentClassRoomService.addStudentClassRoom(classRoom);
             return ResponseEntity.ok(new ApiResponse("added sucessful", theClassRoom));
         } catch (Exception e) {
