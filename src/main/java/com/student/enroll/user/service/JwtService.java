@@ -51,7 +51,6 @@ public class JwtService {
     public String generateToken(String username) {
 
         Map<String, Object> claims = new HashMap<>();
-        System.out.println(getKey());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
