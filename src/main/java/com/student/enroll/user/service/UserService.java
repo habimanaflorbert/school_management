@@ -47,7 +47,7 @@ public class UserService implements IUserService{
      
     
     public Optional<User> getUserByUsername(String username) {
-        return Optional.ofNullable(userRepository.findByUsername(username));
+        return userRepository.findByUsername(username);
     }
     
     public Optional<User> getUserByEmail(String email) {
