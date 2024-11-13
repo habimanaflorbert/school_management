@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,7 @@ public class User {
     private String fullName;
     private String email;
     private String username;
+    @JsonIgnore  
     private String password;
     private Boolean isActive = false;
     private Boolean isFirstLogin = false;
@@ -40,4 +43,11 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+
+    public enum Role {
+        USER,
+        ADMIN,
+        MODERATOR;
+    }
+    
 }
